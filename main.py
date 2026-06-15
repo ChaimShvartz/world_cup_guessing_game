@@ -9,7 +9,7 @@ async def lifespan(app):
     db.init_db()
     db.init_tables()
     yield
-    db.connection.close()
+    db.close()
     logger.info('Shutting down the server')
 
 
