@@ -23,12 +23,12 @@ class BaseDB:
     def create(self, data:dict):
         connection = self.connection
         keys = ', '.join(data)
-        holders = ''.join(['%s'] * len(data))
+        holders = '%s, ' * (len(data) - 1) + '%s'
         query = f'''INSERT INTO {self.table_name}(
         {keys}) VALUES({holders})'''
 
         with connection.cursor() as cursor:
-            cursor.execute(query, data.values())
+            cursor.execute(query, list(data.values()))
             connection.commit()
             return cursor.lastrowid
 
